@@ -64,3 +64,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # Application specific gems
 gem 'devise'
 gem 'pg'
+gem 'dotenv-rails', groups: [:development, :test]
