@@ -3,7 +3,7 @@
 <h1>QuickBooks Gateway</h1>
 
 <% if @connected_to_intuit -%>
-  <p>Your account is connected to Intuit</p>
+  <%= link_to('Disconnect from Intuit', revoke_intuit_path, method: :delete) %>
 <% else -%>
   <%= link_to(
     image_tag(

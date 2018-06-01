@@ -12,4 +12,17 @@ class IntuitController < ApplicationController
     )
     redirect_to root_path
   end
+
+  def revoke
+    oauth_client.revoke_tokens(current_user.refresh_token)
+    current_user.update_attributes(
+      realm_id: nil,
+      access_token: nil,
+      access_token_expires_at: nil,
+      refresh_token: nil,
+      refresh_token_expires_at: nil
+    )
+    flash[:notice] = "Your account is no longer connected to Intuit"
+    redirect_to root_path
+  end
 end
