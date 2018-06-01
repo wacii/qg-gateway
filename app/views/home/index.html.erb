@@ -2,9 +2,13 @@
 
 <h1>QuickBooks Gateway</h1>
 
-<%= link_to(
-  image_tag(
-    'C2QB_white_btn_med_default.png',
-    mouseover: 'C2QB_white_btn_med_hover.png'
-  ), @authorization_endpoint)
-%>
+<% if @connected_to_intuit -%>
+  <p>Your account is connected to Intuit</p>
+<% else -%>
+  <%= link_to(
+    image_tag(
+      'C2QB_white_btn_med_default.png',
+      mouseover: 'C2QB_white_btn_med_hover.png'
+    ), @authorization_endpoint)
+  %>
+<% end -%>

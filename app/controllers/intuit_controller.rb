@@ -6,9 +6,9 @@ class IntuitController < ApplicationController
     current_user.update_attributes(
       realm_id: params[:realmId],
       access_token: result['result_token'],
-      access_token_expires_in: result['expires_in'],
+      access_token_expires_at: DateTime.new + result['expires_in'],
       refresh_token: result['refresh_token'],
-      refresh_token_expires_in: result['x_refresh_token_expires_in']
+      refresh_token_expires_at: DateTime.new + result['x_refresh_token_expires_in']
     )
     redirect_to root_path
   end
