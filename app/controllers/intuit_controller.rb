@@ -10,6 +10,7 @@ class IntuitController < ApplicationController
       refresh_token: result['refresh_token'],
       refresh_token_expires_at: DateTime.new + result['x_refresh_token_expires_in']
     )
+    flash[:notice] = "Your account is now connected to Intuit"
     redirect_to root_path
   end
 
