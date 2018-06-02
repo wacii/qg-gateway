@@ -20,8 +20,7 @@ class IntuitController < ApplicationController
       when 'GET'
         token.get(API_URL + params[:path])
       when 'POST'
-        # TODO pass form data
-        token.post(API_URL + params[:path], {})
+        token.post(API_URL + params[:path], request.body.read)
       else
         return head 400
       end

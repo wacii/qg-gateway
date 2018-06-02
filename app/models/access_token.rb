@@ -53,7 +53,7 @@ class AccessToken
     JSON.parse(res.body)
   end
 
-  def post(url, data = {})
+  def post(url, body = '')
     refresh! if expired?
 
     uri = URI(url)
@@ -68,12 +68,12 @@ class AccessToken
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
     req = Net::HTTP::Post.new(uri, headers)
-    req.set_form_data(data)
+    req.body = body
     res = http.request(req)
 
     if (res.kind_of?(Net::HTTPUnauthorized))
       refresh!
-      return post(url, data)
+      return post(url, body)
     end
 
     JSON.parse(res.body)
