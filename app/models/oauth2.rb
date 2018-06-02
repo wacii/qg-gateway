@@ -63,29 +63,6 @@ class OAuth2
     http.request(req)
   end
 
-  def request(access_token, method, path)
-    baseUrl = 'https://sandbox-quickbooks.api.intuit.com/'
-    uri = URI(baseUrl + path)
-    headers = {
-      Accept: 'application/json',
-      Authorization: "Bearer #{access_token}"
-    }
-    headers[:'Content-Type' => 'application/json'] if method == 'POST'
-
-    http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = true
-    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    req =
-      if method == 'GET'
-        Net::HTTP::Get.new(uri, headers)
-      else
-        Net::HTTP::Post.new(uri, headers)
-      end
-
-    res = http.request(req)
-    JSON.parse(res.body)
-  end
-
   protected
 
   def authorization_header
