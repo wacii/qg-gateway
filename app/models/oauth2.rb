@@ -5,6 +5,8 @@ require 'uri'
 
 # Authorization code grant implementation
 class OAuth2
+  class InvalidGrantError < StandardError; end
+
   def initialize(options = {})
     @discovery_document_url = options[:discovery_document_url]
     @client_id = options[:client_id]
@@ -40,10 +42,12 @@ class OAuth2
   end
 
   def refresh_tokens(refresh_token)
-    request_tokens(
+    tokens = request_tokens(
       grant_type: 'refresh_token',
       refresh_token: refresh_token
     )
+    raise InvalidGrantError if tokens.fetch('error') == 'invalid_grant'
+    tokens
   end
 
   def revoke_tokens(refresh_token)

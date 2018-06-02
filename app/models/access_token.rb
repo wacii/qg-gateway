@@ -44,6 +44,12 @@ class AccessToken
 
     req = Net::HTTP::Get.new(uri, headers)
     res = http.request(req)
+
+    if res.kind_of?(Net::HTTPUnauthorized)
+      refresh!
+      return get(url)
+    end
+
     JSON.parse(res.body)
   end
 
@@ -63,8 +69,13 @@ class AccessToken
 
     req = Net::HTTP::Post.new(uri, headers)
     req.set_form_data(data)
-    
     res = http.request(req)
+
+    if (res.kind_of?(Net::HTTPUnauthorized))
+      refresh!
+      return post(url, data)
+    end
+
     JSON.parse(res.body)
   end
 end
