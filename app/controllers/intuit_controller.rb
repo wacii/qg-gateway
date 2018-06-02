@@ -25,9 +25,10 @@ class IntuitController < ApplicationController
       else
         return head 400
       end
-
-    # TODO handle expired/revoked refresh_token (invalid grant)
     render json: result
+
+  rescue OAuth2::InvalidGrantError
+    head 401
   end
 
   def oauth
